@@ -1,0 +1,38 @@
+seed: 42
+experiment_name: depth-unet-baseline
+run_dir: runs
+
+data:
+  root: data/processed_dataset
+  include_rgb: false
+  augment: true
+  augmentation_params:
+    hflip: 0.5
+    vflip: 0.0
+    rotate90: 0.2
+    brightness_contrast: 0.3
+    gauss_noise: [0.0001, 0.001]
+    gauss_noise_p: 0.3
+
+model:
+  name: unet
+  params:
+    in_channels: 1
+    num_classes: 4
+    base_channels: 32
+    depth: 4
+
+optimizer:
+  name: adam
+  lr: 0.0003
+  weight_decay: 0.0001
+
+scheduler:
+  name: cosine
+  t_max: 50
+  eta_min: 1.0e-6
+
+training:
+  epochs: 80
+  batch_size: 4
+  num_workers: 4
